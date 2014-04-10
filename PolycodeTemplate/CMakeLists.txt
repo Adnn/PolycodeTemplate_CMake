@@ -36,15 +36,7 @@ if(APPLE)
     set(${PROJECT_NAME}_RESOURCES
         Base.lproj/MainMenu.xib 
     ) 
-
-    # Find OS X frameworks
-    find_library(COCOA_LIBRARY Cocoa)
-    find_library(OPENGL_LIBRARY OpenGL)
-    find_library(IOKIT_LIBRARY IOKit)
-    find_library(OPENAL_LIBRARY OpenAL)
-    mark_as_advanced(COCOA_LIBRARY OPENGL_LIBRARY IOKIT_LIBRARY OPENAL_LIBRARY)
-    set(EXTRA_LIBS ${COCOA_LIBRARY} ${OPENGL_LIBRARY} ${IOKIT_LIBRARY} ${OPENAL_LIBRARY})
-       
+   
     set(CMAKE_MACOSX_BUNDLE True)
 
     # This is to compile the project as objective C++
@@ -64,12 +56,10 @@ add_executable(${PROJECT_NAME}
 )
     
 # include CppUTest headers
-include_directories(${Polycode_INCLUDE_DIR} ${Polycode_VIEW_DIR})
-include_directories(${Polycode_DEPENDENCIES_INCLUDE_DIR})
+include_directories(${Polycode_INCLUDE_DIR} ${Polycode_VIEW_DIR} ${Polycode_DEPENDENCIES_INCLUDE_DIR})
 
 target_link_libraries(${PROJECT_NAME}
     ${Polycode_LIBRARIES}
-    ${EXTRA_LIBS}
 )
 
 ######################################################################

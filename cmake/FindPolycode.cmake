@@ -88,6 +88,17 @@ if(Polycode_INCLUDE_DIR)
     endif()
 endif()
 
+if(APPLE)
+    # Find OS X frameworks against which Polycode and its dependencies were linked
+    # TODO: Is it a good idea to do that here ? What happens if those are duplicated ?
+    find_library(COCOA_LIBRARY Cocoa)
+    find_library(OPENGL_LIBRARY OpenGL)
+    find_library(IOKIT_LIBRARY IOKit)
+    find_library(OPENAL_LIBRARY OpenAL)
+    mark_as_advanced(COCOA_LIBRARY OPENGL_LIBRARY IOKIT_LIBRARY OPENAL_LIBRARY)
+    set(EXTRA_LIBRARIES ${COCOA_LIBRARY} ${OPENGL_LIBRARY} ${IOKIT_LIBRARY} ${OPENAL_LIBRARY})
+endif(APPLE) 
+
 ##  
 ## handle the QUIETLY and REQUIRED arguments and set Polycode_FOUND to TRUE if 
 ## all listed variables are TRUE
@@ -108,6 +119,8 @@ IF(POLYCODE_FOUND)
         ${OGG_LIBRARY}
         ${VORBIS_LIBRARY}
         ${VORBISFILE_LIBRARY}
+
+        ${EXTRA_LIBRARIES}
 )
 ELSE(POLYCODE_FOUND)
     SET( Polycode_LIBRARIES )
